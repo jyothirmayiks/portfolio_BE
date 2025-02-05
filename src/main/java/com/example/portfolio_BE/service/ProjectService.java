@@ -39,6 +39,10 @@ public class ProjectService {
         }).orElseThrow(() -> new RuntimeException("Project not found with id: " + id));
     }
 
+    public int getProjectCount() {
+        return (int) projectRepository.count();
+    }
+
     public void deleteProject(UUID id) {
         projectRepository.deleteById(id);
     }

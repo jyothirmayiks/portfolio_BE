@@ -35,6 +35,10 @@ public class SkillService {
         }).orElseThrow(() -> new RuntimeException("Skill not found with id: " + id));
     }
 
+    public int getSkillCount() {
+        return (int) skillRepository.count();
+    }
+
     public void deleteSkill(UUID id) {
         skillRepository.deleteById(id);
     }

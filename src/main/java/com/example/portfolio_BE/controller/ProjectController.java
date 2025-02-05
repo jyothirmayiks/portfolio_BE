@@ -110,6 +110,14 @@ public class ProjectController {
         }
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Map<String, Integer>> getUserCount() {
+        int count = projectService.getProjectCount();  // Call service method
+        Map<String, Integer> response = new HashMap<>();
+        response.put("count", count);
+        return ResponseEntity.ok(response);
+    }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Map<String, Object>> updateProject(

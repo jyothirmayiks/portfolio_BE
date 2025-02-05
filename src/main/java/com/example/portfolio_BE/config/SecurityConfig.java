@@ -40,14 +40,15 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // Disable CSRF for API
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/users/register","/api/users/login",
-                                "/api/users","/api/users/{id}",
-                                "/api/skills","/api/skills/{id}",
-                                "/api/education","/api/education/{id}",
-                                "api/projects","api/projects/{id}").permitAll()
+                                "/api/users","/api/users/{id}","/api/users/count",
+                                "/api/skills","/api/skills/{id}","/api/skills/count",
+                                "/api/education","/api/education/{id}","/api/education/count",
+                                "api/projects","/api/projects/count","api/projects/{id}").permitAll()
+                        .requestMatchers("/**").permitAll()
 
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
-                .httpBasic(Customizer.withDefaults()); // Enable Basic Authentication
+                .httpBasic(Customizer.withDefaults());
 
         return http.build();
     }

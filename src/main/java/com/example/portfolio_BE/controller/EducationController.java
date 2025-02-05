@@ -78,8 +78,8 @@ public class EducationController {
             education.setInstitution(institution);
             education.setYear(year);
 
-            // Ensure to pass both Education and MultipartFile image to saveEducation method
-            Education savedEducation = educationService.saveEducation(education, image);  // Corrected method call
+
+            Education savedEducation = educationService.saveEducation(education, image);
 
             return ResponseEntity.status(201).body(Map.of(
                     "statusCode", 201,
@@ -123,6 +123,14 @@ public class EducationController {
                     "response", null
             ));
         }
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Map<String, Integer>> getUserCount() {
+        int count = educationService.getEducationCount();  // Call service method
+        Map<String, Integer> response = new HashMap<>();
+        response.put("count", count);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")

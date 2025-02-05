@@ -80,4 +80,8 @@ public class UserService {
             return "User not found";
         }
     }
+
+    public int getUserCount() {
+        return (int) adminRepo.count();
+    }
 }

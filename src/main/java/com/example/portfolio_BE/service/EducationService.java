@@ -60,7 +60,10 @@ public class EducationService {
         }).orElse(null);
     }
 
-    // Method to delete Education by its ID
+    public int getEducationCount() {
+        return (int) educationRepository.count();
+    }
+
     public void deleteEducation(UUID id) {
         educationRepository.deleteById(id);
     }

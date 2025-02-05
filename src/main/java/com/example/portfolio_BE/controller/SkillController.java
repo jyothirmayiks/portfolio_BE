@@ -65,6 +65,14 @@ public class SkillController {
         }
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Map<String, Integer>> getUserCount() {
+        int count = skillService.getSkillCount();  // Call service method
+        Map<String, Integer> response = new HashMap<>();
+        response.put("count", count);
+        return ResponseEntity.ok(response);
+    }
+
 
     @PostMapping
     public ResponseEntity<Map<String, Object>> createSkill(

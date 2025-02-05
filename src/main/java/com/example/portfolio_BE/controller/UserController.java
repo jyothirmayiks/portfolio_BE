@@ -3,10 +3,13 @@ package com.example.portfolio_BE.controller;
 import com.example.portfolio_BE.dto.UserDTO;
 import com.example.portfolio_BE.model.User;
 import com.example.portfolio_BE.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -35,9 +38,18 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Object> loginAdmin() {
-        return ResponseEntity.ok(new ResponseMessage(200, "Login Successful", null));
+    public ResponseEntity<Object> loginAdmin(@RequestBody UserDTO userDTO, HttpServletRequest request) {
+        boolean isValidUser = adminService.loginAdmin(userDTO.getUsername(), userDTO.getPassword());
+
+        if (isValidUser) {
+            // Set session flag
+            request.getSession().setAttribute("isLoggedIn", 1);
+            return ResponseEntity.ok(new ResponseMessage(200, "Login Successful", null));
+        } else {
+            return ResponseEntity.status(401).body(new ResponseMessage(401, "Invalid credentials", null));
+        }
     }
+
 
 
     @GetMapping
@@ -57,6 +69,14 @@ public class UserController {
             return ResponseEntity.status(404).body(
                     new ResponseMessage(404, "User not found", null));
         }
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Map<String, Integer>> getUserCount() {
+        int count = adminService.getUserCount();  // Call service method
+        Map<String, Integer> response = new HashMap<>();
+        response.put("count", count);
+        return ResponseEntity.ok(response);
     }
 
 
